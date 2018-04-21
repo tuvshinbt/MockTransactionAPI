@@ -5,11 +5,20 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.model;
 
+//{
+//  "txnId" : "00011",
+//  "cardNo" : "0123456789012345",
+//  "expirationDate" : "04/2018",
+//  "nameOnCard" : "TEST",
+//  "zipCode" : "52557",
+//  "amount" : 1.1,
+//  "ccv" : "CCV"
+//}
 /**
  *
  * @author tuvshuu
  */
-public class Purchase {
+public class TransactionRequest {
 
     private String txnId;
     private String cardNo;
@@ -19,7 +28,7 @@ public class Purchase {
     private String zipCode;
     private Double amount;
 
-    public Purchase() {
+    public TransactionRequest() {
     }
 
     public String getTxnId() {
@@ -80,7 +89,7 @@ public class Purchase {
 
     @Override
     public String toString() {
-        return "Purchase{" + "txnId=" + txnId + '}';
+        return "TransactionRequest{" + "txnId=" + txnId + '}';
     }
 
 }

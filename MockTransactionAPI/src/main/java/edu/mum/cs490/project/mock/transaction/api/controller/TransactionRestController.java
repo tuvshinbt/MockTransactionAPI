@@ -5,6 +5,7 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.controller;
 
+import edu.mum.cs490.project.mock.transaction.api.model.TransactionRequest;
 import edu.mum.cs490.project.mock.transaction.api.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,10 +36,9 @@ public class TransactionRestController {
     }
 
     @PostMapping(value = "/mock/transaction/api")
-    public ResponseEntity<String> doTransaction(@RequestBody String data) {
+    public ResponseEntity<String> doTransaction(@RequestBody TransactionRequest transactionRequest) {
         System.out.printf("### TransactionRestController %s() has been called ###\n", "doTransaction");
-        System.out.println("data - " + data);
-        String result = transactionService.doTransaction(data);
-        return new ResponseEntity(result, HttpStatus.OK);
+        System.out.println("TR - " + transactionRequest.toString());
+        return new ResponseEntity(transactionService.doTransaction(transactionRequest), HttpStatus.OK);
     }
 }

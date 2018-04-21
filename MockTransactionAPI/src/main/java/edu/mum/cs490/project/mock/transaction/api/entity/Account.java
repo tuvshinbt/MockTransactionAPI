@@ -5,23 +5,37 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.entity;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import org.springframework.data.annotation.CreatedDate;
 
 /**
  *
  * @author tuvshuu
  */
 @Entity
-@Table(name = "EVENTS")
+@Table(name = "Account")
+@NamedQueries(
+        @NamedQuery(name = "Account.find.by.fields", query = "SELECT a FROM Account a WHERE "
+                + "a.cardNo = :cardNo and "
+                + "a.name = :name and "
+                + "a.zipCode = :zipCode and "
+                + "a.CCV = :CCV and "
+                + "a.expirationDate = :expirationDate")
+)
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String cardNo;
@@ -35,8 +49,19 @@ public class Account {
     private String zipCode;
     @Column(nullable = false)
     private Double amount;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     public Account() {
+    }
+
+    public Account(String cardNo, String expirationDate, String name, String CCV, String zipCode) {
+        this.cardNo = cardNo;
+        this.expirationDate = expirationDate;
+        this.name = name;
+        this.CCV = CCV;
+        this.zipCode = zipCode;
+        this.createdAt = new Date();
     }
 
     public Long getId() {
@@ -93,6 +118,14 @@ public class Account {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

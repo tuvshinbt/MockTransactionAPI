@@ -16,8 +16,8 @@ public interface TransactionDAO {
 
     Account getAccount(Account account);
 
-    Transaction getLastActiveTransaction(Account account);
+    Transaction getLastActiveTransaction(String cardNo);
 
-    Integer doTransaction(Transaction transaction);
+    <T> T save(T t);
 
 }

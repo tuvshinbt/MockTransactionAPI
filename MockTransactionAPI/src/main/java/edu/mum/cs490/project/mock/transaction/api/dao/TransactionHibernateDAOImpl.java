@@ -7,6 +7,11 @@ package edu.mum.cs490.project.mock.transaction.api.dao;
 
 import edu.mum.cs490.project.mock.transaction.api.entity.Account;
 import edu.mum.cs490.project.mock.transaction.api.entity.Transaction;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,21 +19,42 @@ import org.springframework.stereotype.Repository;
  * @author tuvshuu
  */
 @Repository
+@Transactional
 public class TransactionHibernateDAOImpl implements TransactionDAO {
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Override
     public Account getAccount(Account account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        TypedQuery<Account> query = em.createNamedQuery("Account.find.by.fields", Account.class);
+        query.setParameter("cardNo", account.getCardNo());
+        query.setParameter("name", account.getName());
+        query.setParameter("zipCode", account.getZipCode());
+        query.setParameter("CCV", account.getCCV());
+        query.setParameter("expirationDate", account.getExpirationDate());
+        return TransactionHibernateDAOImpl.<Account>getSingleResultOrNull(query.getResultList());
     }
 
     @Override
-    public Transaction getLastActiveTransaction(Account account) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Transaction getLastActiveTransaction(String cardNo) {
+        TypedQuery<Transaction> query = em.createNamedQuery("Transaction.find.last.active", Transaction.class);
+        query.setParameter("cardNo", cardNo);
+        return TransactionHibernateDAOImpl.<Transaction>getSingleResultOrNull(query.getResultList());
+    }
+
+    private static <T> T getSingleResultOrNull(List<T> list) {
+        if (list.isEmpty()) {
+            return null;
+        } else {
+            return list.get(0);
+        }
     }
 
     @Override
-    public Integer doTransaction(Transaction transaction) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public <T> T save(T t) {
+        em.persist(t);
+        return t;
     }
 
 }
