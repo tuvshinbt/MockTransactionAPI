@@ -9,7 +9,6 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.mum.cs490.project.mock.transaction.api.model.TransactionRequest;
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -37,7 +36,7 @@ public class MainTest {
             //Convert object to JSON string
             String jsonInString = mapper.writeValueAsString(tr);
             System.out.println(jsonInString);
-
+            
             //Convert object to JSON string and pretty print
             jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tr);
             System.out.println(jsonInString);

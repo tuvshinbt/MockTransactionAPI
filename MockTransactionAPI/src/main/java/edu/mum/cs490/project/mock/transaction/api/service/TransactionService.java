@@ -13,6 +13,6 @@ import edu.mum.cs490.project.mock.transaction.api.model.TransactionRequest;
  */
 public interface TransactionService {
 
-    Integer doTransaction(TransactionRequest tr);
+    String doTransaction(String tr);
 
 }

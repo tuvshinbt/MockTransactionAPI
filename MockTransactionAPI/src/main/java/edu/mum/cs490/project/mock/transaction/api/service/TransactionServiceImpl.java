@@ -5,29 +5,46 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.mum.cs490.project.mock.transaction.api.dao.TransactionDAO;
 import edu.mum.cs490.project.mock.transaction.api.entity.Account;
 import edu.mum.cs490.project.mock.transaction.api.entity.Transaction;
 import edu.mum.cs490.project.mock.transaction.api.model.TransactionRequest;
+import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.annotation.RequestScope;
 
 /**
  *
  * @author tuvshuu
  */
 @Service
+@RequestScope
 public class TransactionServiceImpl implements TransactionService {
+
+    public TransactionServiceImpl() {
+        System.out.println("\nTransactionServiceImpl has been initialized.\n");
+    }
 
     @Autowired
     private TransactionDAO transactionDAO;
 
+    private final ObjectMapper mapper = new ObjectMapper();
+
     private final Logger logger = LogManager.getLogger(TransactionServiceImpl.class);
 
     @Override
-    public Integer doTransaction(TransactionRequest tr) {
+    public String doTransaction(String transactionRequestStr) {
+        TransactionRequest tr;
+        try {
+            tr = mapper.readValue(transactionRequestStr, TransactionRequest.class);
+        } catch (IOException | NullPointerException ex) {
+            logger.error("", ex);
+            return "Invalid request";
+        }
         Account trAccount = new Account(tr.getCardNo(), tr.getExpirationDate(), tr.getNameOnCard().toUpperCase(), tr.getCCV(), tr.getZipCode());
 
         Integer resultCode = 0;
@@ -87,6 +104,6 @@ public class TransactionServiceImpl implements TransactionService {
                 tr.getTxnId());
         transactionDAO.<Transaction>save(transaction);
         logger.info("A transaction has been inserted . Result of transaction - " + doTransaction);
-        return resultCode;
+        return resultCode.toString();
     }
 }
