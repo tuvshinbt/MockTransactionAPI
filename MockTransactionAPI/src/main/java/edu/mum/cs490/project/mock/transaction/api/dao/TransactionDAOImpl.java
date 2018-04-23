@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Transactional
-public class TransactionHibernateDAOImpl implements TransactionDAO {
+public class TransactionDAOImpl implements TransactionDAO {
 
     @PersistenceContext
     private EntityManager em;
@@ -33,14 +33,14 @@ public class TransactionHibernateDAOImpl implements TransactionDAO {
         query.setParameter("zipCode", account.getZipCode());
         query.setParameter("CCV", account.getCCV());
         query.setParameter("expirationDate", account.getExpirationDate());
-        return TransactionHibernateDAOImpl.<Account>getSingleResultOrNull(query.getResultList());
+        return TransactionDAOImpl.<Account>getSingleResultOrNull(query.getResultList());
     }
 
     @Override
     public Transaction getLastActiveTransaction(String cardNo) {
         TypedQuery<Transaction> query = em.createNamedQuery("Transaction.find.last.active", Transaction.class);
         query.setParameter("cardNo", cardNo);
-        return TransactionHibernateDAOImpl.<Transaction>getSingleResultOrNull(query.getResultList());
+        return TransactionDAOImpl.<Transaction>getSingleResultOrNull(query.getResultList());
     }
 
     private static <T> T getSingleResultOrNull(List<T> list) {

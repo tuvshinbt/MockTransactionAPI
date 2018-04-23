@@ -5,8 +5,6 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.service;
 
-import edu.mum.cs490.project.mock.transaction.api.model.TransactionRequest;
-
 /**
  *
  * @author tuvshuu
