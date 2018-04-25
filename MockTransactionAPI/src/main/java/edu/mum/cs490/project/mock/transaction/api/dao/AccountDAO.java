@@ -1,0 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.mum.cs490.project.mock.transaction.api.dao;
+
+import edu.mum.cs490.project.mock.transaction.api.entity.Account;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+/**
+ *
+ * @author tuvshuu
+ */
+public interface AccountDAO extends JpaRepository<Account, Long> {
+
+    @Query("SELECT a FROM Account a WHERE "
+            + "a.cardNo = ?1 and "
+            + "a.name = ?2 and "
+            + "a.zipCode = ?3 and "
+            + "a.CCV = ?4 and "
+            + "a.expirationDate = ?5")
+    Account findByCardNoAndNameAndZipCodeAndCCVAndExpirationDate(String cardNo, String name, String zipCode, String CCV, String expirationDate);
+
+    Account findByCardNo(String cardNo);
+
+}

@@ -11,6 +11,6 @@ package edu.mum.cs490.project.mock.transaction.api.service;
  */
 public interface TransactionService {
 
-    String doTransaction(String tr);
+    String doTransaction(String transactionRequestStr);
 
 }

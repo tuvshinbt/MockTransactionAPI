@@ -25,8 +25,8 @@ import javax.persistence.TemporalType;
 @Table(name = "Transaction")
 @NamedQueries(
         @NamedQuery(name = "Transaction.find.last.active", query = "SELECT t FROM Transaction t WHERE "
-                + "t.cardNo = :cardNo AND "
-                + "(t.result = true or t.payCash = true) "
+                + "t.srcCardNo = :srcCardNo AND "
+                + "(t.result = 1 or t.payCash = true) "
                 + "ORDER BY t.id DESC")
 )
 public class Transaction {
@@ -34,9 +34,9 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String cardNo;
+//    @Column(nullable = false)
+    private String srcCardNo;
+    private String dstCardNo;
     @Column(name = "TxnAmount", nullable = false)
     private double transactionAmount;
     @Column(name = "AblAmount", nullable = false)
@@ -44,18 +44,21 @@ public class Transaction {
     @Column(name = "UsedAmount", nullable = false)
     private double usedAmount;
     @Column(name = "rsl")
-    private Boolean result;
+    private Integer result;
     private Boolean payCash;
     private String transactionId;
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+//    private Account srcAccount;
+//    private Account dstAccount;
 
     public Transaction() {
     }
 
-    public Transaction(String cardNo, Double transactionAmount, Double availableAmount, Double usedAmount, Boolean result, String transactionId) {
-        this.cardNo = cardNo;
+    public Transaction(String srcCardNo, String dstCardNo, Double transactionAmount, Double availableAmount, Double usedAmount, Integer result, String transactionId) {
+        this.srcCardNo = srcCardNo;
+        this.dstCardNo = dstCardNo;
         this.transactionAmount = transactionAmount;
         this.availableAmount = availableAmount;
         this.usedAmount = usedAmount;
@@ -72,12 +75,20 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getCardNo() {
-        return cardNo;
+    public String getSrcCardNo() {
+        return srcCardNo;
     }
 
-    public void setCardNo(String cardNo) {
-        this.cardNo = cardNo;
+    public void setSrcCardNo(String srcCardNo) {
+        this.srcCardNo = srcCardNo;
+    }
+
+    public String getDstCardNo() {
+        return dstCardNo;
+    }
+
+    public void setDstCardNo(String dstCardNo) {
+        this.dstCardNo = dstCardNo;
     }
 
     public double getTransactionAmount() {
@@ -104,11 +115,11 @@ public class Transaction {
         this.usedAmount = usedAmount;
     }
 
-    public Boolean getResult() {
+    public Integer getResult() {
         return result;
     }
 
-    public void setResult(Boolean result) {
+    public void setResult(Integer result) {
         this.result = result;
     }
 

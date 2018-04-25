@@ -12,6 +12,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,9 +26,10 @@ public class TransactionAOPService {
     private final Logger logger = LogManager.getLogger(TransactionAOPService.class);
 
     @Autowired
+    @Qualifier("apiAES")
     private AES aes;
 
-    @Around("execution(* edu.mum.cs490.project.mock.transaction.api.service.*.*(..))&& args(transactionRequestStr)")
+    @Around("execution(* edu.mum.cs490.project.mock.transaction.api.service1.*.*(..))&& args(transactionRequestStr)")
     public Object aopEncDecryptService(ProceedingJoinPoint pjp, String transactionRequestStr) throws Throwable {
         logger.info("# AOP BEFORE (5) #  is called on " + pjp.getSignature().toShortString() + " " + transactionRequestStr);
         String decrytedData = aes.decrypt(transactionRequestStr);

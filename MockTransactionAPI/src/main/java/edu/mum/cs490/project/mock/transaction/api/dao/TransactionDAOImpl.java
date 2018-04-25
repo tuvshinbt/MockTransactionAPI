@@ -20,12 +20,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Transactional
-public class TransactionDAOImpl implements TransactionDAO {
+public class TransactionDAOImpl {
 
     @PersistenceContext
     private EntityManager em;
 
-    @Override
     public Account getAccount(Account account) {
         TypedQuery<Account> query = em.createNamedQuery("Account.find.by.fields", Account.class);
         query.setParameter("cardNo", account.getCardNo());
@@ -36,10 +35,9 @@ public class TransactionDAOImpl implements TransactionDAO {
         return TransactionDAOImpl.<Account>getSingleResultOrNull(query.getResultList());
     }
 
-    @Override
-    public Transaction getLastActiveTransaction(String cardNo) {
+    public Transaction getLastActiveTransaction(String srcCardNo) {
         TypedQuery<Transaction> query = em.createNamedQuery("Transaction.find.last.active", Transaction.class);
-        query.setParameter("cardNo", cardNo);
+        query.setParameter("srcCardNo", srcCardNo);
         return TransactionDAOImpl.<Transaction>getSingleResultOrNull(query.getResultList());
     }
 
@@ -51,10 +49,13 @@ public class TransactionDAOImpl implements TransactionDAO {
         }
     }
 
-    @Override
     public <T> T save(T t) {
         em.persist(t);
         return t;
+    }
+
+    public Account getAccountCardNo(Account account) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

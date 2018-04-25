@@ -5,10 +5,8 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.mum.cs490.project.mock.transaction.api.model.TransactionRequest;
+import edu.mum.cs490.project.mock.transaction.api.service.DepositService;
 import edu.mum.cs490.project.mock.transaction.api.service.TransactionService;
-import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionRestController {
 
     @Autowired
-//    @Qualifier("transactionServiceImpl")
     private TransactionService transactionService;
+    @Autowired
+    private DepositService depositService;
 
     private final Logger logger = LogManager.getLogger(TransactionRestController.class);
 
@@ -46,5 +45,12 @@ public class TransactionRestController {
         System.out.printf("### TransactionRestController %s() has been called ###\n", "doTransaction");
         System.out.println("TR - " + transactionRequestStr);
         return new ResponseEntity(transactionService.doTransaction(transactionRequestStr), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/mock/deposit/api")
+    public ResponseEntity<String> doDeposit(@RequestBody String depositRequestStr) {
+        System.out.printf("### TransactionRestController %s() has been called ###\n", "doDeposit");
+        System.out.println("DR - " + depositRequestStr);
+        return new ResponseEntity(depositService.doDeposit(depositRequestStr), HttpStatus.OK);
     }
 }

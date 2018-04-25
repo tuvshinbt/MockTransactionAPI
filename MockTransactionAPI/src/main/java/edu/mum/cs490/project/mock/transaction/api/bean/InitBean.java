@@ -5,13 +5,17 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.bean;
 
+import edu.mum.cs490.project.mock.transaction.api.dao.AccountDAO;
 import edu.mum.cs490.project.mock.transaction.api.dao.TransactionDAO;
 import edu.mum.cs490.project.mock.transaction.api.entity.Account;
+import edu.mum.cs490.project.mock.transaction.api.util.AES;
+import edu.mum.cs490.project.mock.transaction.api.util.impl.AESImpl;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,10 +37,9 @@ public class InitBean implements ApplicationRunner {
     }
 
     @Autowired
-    TransactionDAO transactionDAO;
+    AccountDAO accountDAO;
 
     public void insertData() {
-
         Account account = new Account();
         account.setCardNo("01234567890123456");
         account.setCCV("CCV");
@@ -45,9 +48,24 @@ public class InitBean implements ApplicationRunner {
         account.setName("TEST");
         account.setZipCode("52557");
         account.setCreatedAt(new Date());
-        transactionDAO.<Account>save(account
-        );
-
+        accountDAO.save(account);
     }
 
+    @Value("${api.secret.key.word}")
+    private String apiSecredKeyWord;
+
+    @Bean(name = "apiAES")
+    public AES getApiAES() {
+        System.out.println("apiSecredKeyWord - " + apiSecredKeyWord);
+        return new AESImpl(apiSecredKeyWord);
+    }
+
+    @Value("${secret.key.word}")
+    private String secredKeyWord;
+
+    @Bean(name = "AES")
+    public AES getAES() {
+        System.out.println("secredKeyWord - " + secredKeyWord);
+        return new AESImpl(secredKeyWord);
+    }
 }

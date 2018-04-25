@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.mum.cs490.project.mock.transaction.api.util;
+package edu.mum.cs490.project.mock.transaction.api.service;
 
 /**
  *
  * @author tuvshuu
  */
-public interface AES {
+public interface DepositService {
 
-    public String encrypt(String strToEncrypt);
-
-    public String decrypt(String strToDecrypt);
+    String doDeposit(String depositRequestStr);
 }

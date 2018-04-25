@@ -5,16 +5,15 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.model;
 
-// {"txnId":"00011","srcCardNo":"0123456789012345","expirationDate":"04/2018","nameOnCard":"TEST","zipCode":"52557","amount":1.1,"dstCardNo":"0123456789012399","ccv":"CCV"}
-// T924bkQSm4LtVlUvYbA3/VKsfBom6bxEIK8t613bNwHIVzuWYzf04u2GV8VW/29Pj2OWiMCd4nPDyPHsLA+p0EYp8HsvirhTDmSw0NNnK9OROunlgBxqxVPAfr8HxU6b+s6W3x1aqWgMTDy7H+cCZjBUWUoC91B+JbCrHuyj0Bv5B9PVnpeCiYVJj0bxuo9g
+// {"txnId":"00011","srcCardNo":"0123456789012345","expirationDate":"04/2018","nameOnCard":"TEST","zipCode":"52557","amount":1.1,"ccv":"CCV"}
+// T924bkQSm4LtVlUvYbA3/aCOD+bR4Wx2OYubUzEIGJwWjEAGpT5sVP0lY1b4tR9lQRRaWx2D0NKiPSnRRWBT+adBeM9ITcJaQ5U/OV/9fjRdawic6lWGY965HCR4qwr3FX47gNFO8yesBND24omfdjgw5EgH23OH2SHVqz7LkkntSFy9ppKNYDzoaltOOMNK
 /**
  *
  * @author tuvshuu
  */
-public class TransactionRequest {
+public class DepositRequest {
 
     private String txnId;
-    private String srcCardNo;
     private String expirationDate;
     private String nameOnCard;
     private String CCV;
@@ -22,7 +21,7 @@ public class TransactionRequest {
     private Double amount;
     private String dstCardNo;
 
-    public TransactionRequest() {
+    public DepositRequest() {
     }
 
     public String getTxnId() {
@@ -31,14 +30,6 @@ public class TransactionRequest {
 
     public void setTxnId(String txnId) {
         this.txnId = txnId;
-    }
-
-    public String getSrcCardNo() {
-        return srcCardNo;
-    }
-
-    public void setSrcCardNo(String srcCardNo) {
-        this.srcCardNo = srcCardNo;
     }
 
     public String getExpirationDate() {
@@ -91,7 +82,7 @@ public class TransactionRequest {
 
     @Override
     public String toString() {
-        return "TransactionRequest{" + "txnId=" + txnId + '}';
+        return "DepositRequest{" + "txnId=" + txnId + '}';
     }
 
 }
