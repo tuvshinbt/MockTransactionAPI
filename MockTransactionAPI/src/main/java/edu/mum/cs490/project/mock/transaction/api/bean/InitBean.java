@@ -5,8 +5,8 @@
  */
 package edu.mum.cs490.project.mock.transaction.api.bean;
 
+import edu.mum.cs490.project.mock.transaction.api.aop.TransactionAOPService;
 import edu.mum.cs490.project.mock.transaction.api.dao.AccountDAO;
-import edu.mum.cs490.project.mock.transaction.api.dao.TransactionDAO;
 import edu.mum.cs490.project.mock.transaction.api.entity.Account;
 import edu.mum.cs490.project.mock.transaction.api.util.AES;
 import edu.mum.cs490.project.mock.transaction.api.util.impl.AESImpl;
@@ -38,6 +38,8 @@ public class InitBean implements ApplicationRunner {
 
     @Autowired
     AccountDAO accountDAO;
+    @Autowired
+    TransactionAOPService transactionAOPService;
 
     public void insertData() {
         Account account = new Account();

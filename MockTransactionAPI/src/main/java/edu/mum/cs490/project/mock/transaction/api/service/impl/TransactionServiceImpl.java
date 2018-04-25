@@ -41,10 +41,10 @@ public class TransactionServiceImpl implements TransactionService {
     private final Logger logger = LogManager.getLogger(TransactionServiceImpl.class);
 
     @Override
-    public String doTransaction(String transactionRequestStr) {
+    public String doTransaction(String requestStr) {
         TransactionRequest tr;
         try {
-            tr = mapper.readValue(transactionRequestStr, TransactionRequest.class);
+            tr = mapper.readValue(requestStr, TransactionRequest.class);
         } catch (IOException | NullPointerException ex) {
             logger.error("", ex);
             return "Invalid request";
@@ -56,15 +56,18 @@ public class TransactionServiceImpl implements TransactionService {
         double usedAmount = 0.0;
 
         // To get an account from db
+        logger.info("Get the source account from the DB.");
         Account srcAccount = accountDAO.findByCardNoAndNameAndZipCodeAndCCVAndExpirationDate(account.getCardNo(), account.getName(), account.getZipCode(), account.getCCV(), account.getExpirationDate());
 
         if (srcAccount == null) {
-            // Not found account
+            // Not found the account
+            logger.info("Not found the account.");
             resultCode = 2;
         } else {
             availableAmount = srcAccount.getAmount();
             if (srcAccount.getAmount() < tr.getAmount()) {
                 // NOT enough amount
+                logger.info("NOT enough amount");
                 resultCode = 3;
             } else {
                 // ENOUGH amount
@@ -73,25 +76,29 @@ public class TransactionServiceImpl implements TransactionService {
         }
         if (resultCode == 1 || resultCode == 3) {
             // To get last active transaction from db
+            logger.info("Get last transaction from the DB");
             Transaction lastTransaction = TransactionDAO.<Transaction>getSingleResultOrNull(transactionDAO.getLastActiveTransaction(srcAccount.getCardNo()));
             if (lastTransaction != null) {
                 usedAmount = lastTransaction.getUsedAmount();
             }
         }
-        Account dstAccount = accountDAO.findByCardNo(tr.getDstCardNo());
         if (resultCode == 1) {
             // Deduction from source account
             availableAmount = srcAccount.getAmount() - tr.getAmount();
             usedAmount += tr.getAmount();
             srcAccount.setAmount(availableAmount);
             accountDAO.save(srcAccount);
+            logger.info("The source account has been updated.");
+
             // Credit to destination account
+            Account dstAccount = accountDAO.findByCardNo(tr.getDstCardNo());
             if (dstAccount == null) {
                 dstAccount = new Account();
                 dstAccount.setCardNo(tr.getDstCardNo());
                 dstAccount.setAmount(0.0);
             }
             dstAccount.setAmount(dstAccount.getAmount() + tr.getAmount());
+            logger.info("The destination account has been updated.");
             accountDAO.save(dstAccount);
 
         }
@@ -104,8 +111,7 @@ public class TransactionServiceImpl implements TransactionService {
                 resultCode,
                 tr.getTxnId());
         transactionDAO.save(newTransaction);
-
-        logger.info("A transaction has been inserted . Result of transaction - " + (resultCode == 1) + "(" + resultCode + ")");
+        logger.info("New transaction has been inserted. Result of transaction request - " + (resultCode == 1) + "(" + resultCode + ")");
         return resultCode.toString();
     }
 }

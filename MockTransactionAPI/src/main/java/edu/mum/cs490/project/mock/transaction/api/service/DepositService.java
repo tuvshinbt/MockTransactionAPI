@@ -11,5 +11,5 @@ package edu.mum.cs490.project.mock.transaction.api.service;
  */
 public interface DepositService {
 
-    String doDeposit(String depositRequestStr);
+    String doDeposit(String requestStr);
 }

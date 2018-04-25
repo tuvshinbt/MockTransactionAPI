@@ -147,4 +147,9 @@ public class Transaction {
         this.createdAt = createdAt;
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" + "id=" + id + ", srcCardNo=" + srcCardNo + ", dstCardNo=" + dstCardNo + ", transactionAmount=" + transactionAmount + ", availableAmount=" + availableAmount + ", usedAmount=" + usedAmount + ", result=" + result + ", payCash=" + payCash + ", transactionId=" + transactionId + ", createdAt=" + createdAt + '}';
+    }
+
 }

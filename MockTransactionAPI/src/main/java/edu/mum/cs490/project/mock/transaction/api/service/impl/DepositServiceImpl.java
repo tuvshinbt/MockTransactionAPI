@@ -41,10 +41,10 @@ public class DepositServiceImpl implements DepositService {
     private final Logger logger = LogManager.getLogger(DepositServiceImpl.class);
 
     @Override
-    public String doDeposit(String depositRequestStr) {
+    public String doDeposit(String requestStr) {
         DepositRequest dr;
         try {
-            dr = mapper.readValue(depositRequestStr, DepositRequest.class);
+            dr = mapper.readValue(requestStr, DepositRequest.class);
         } catch (IOException | NullPointerException ex) {
             logger.error("", ex);
             return "Invalid request";
@@ -55,13 +55,16 @@ public class DepositServiceImpl implements DepositService {
         double availableAmount = 0.0;
 
         // To get an account from db
+        logger.info("Get the account from the DB.");
         Account dstAccount = accountDAO.findByCardNoAndNameAndZipCodeAndCCVAndExpirationDate(account.getCardNo(), account.getName(), account.getZipCode(), account.getCCV(), account.getExpirationDate());
 
         if (dstAccount == null) {
             // Not found account
+            logger.info("Not found the account");
             resultCode = 2;
         } else {
             // FOUND amount
+            logger.info("Found the account");
             resultCode = 1;
         }
         if (resultCode == 1) {
@@ -70,6 +73,7 @@ public class DepositServiceImpl implements DepositService {
             availableAmount = dstAccount.getAmount() + dr.getAmount();
             dstAccount.setAmount(availableAmount);
             accountDAO.save(dstAccount);
+            logger.info("The account has been updated.");
         }
         Transaction newTransaction = new Transaction(
                 null,
@@ -81,8 +85,7 @@ public class DepositServiceImpl implements DepositService {
                 dr.getTxnId());
         newTransaction.setPayCash(true);
         transactionDAO.save(newTransaction);
-
-        logger.info("A deposit has been inserted . Result of deposit - " + (resultCode == 1) + "(" + resultCode + ")");
+        logger.info("New deposit has been inserted . Result of deposit request - " + (resultCode == 1) + "(" + resultCode + ")");
         return resultCode.toString();
     }
 }

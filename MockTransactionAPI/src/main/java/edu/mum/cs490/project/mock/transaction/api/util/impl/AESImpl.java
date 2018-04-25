@@ -64,10 +64,14 @@ public class AESImpl implements AES {
     @Override
     public String encrypt(String strToEncrypt) {
         try {
-            setKey();
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-            return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+            if (secretKeyWord != null && !secretKeyWord.isEmpty()) {
+                setKey();
+                Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+                cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+                return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
+            } else {
+                return strToEncrypt;
+            }
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | UnsupportedEncodingException | IllegalBlockSizeException | BadPaddingException e) {
             logger.error("Error while encrypting: " + e.toString());
         }
@@ -77,10 +81,14 @@ public class AESImpl implements AES {
     @Override
     public String decrypt(String strToDecrypt) {
         try {
-            setKey();
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+            if (secretKeyWord != null && !secretKeyWord.isEmpty()) {
+                setKey();
+                Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+                cipher.init(Cipher.DECRYPT_MODE, secretKey);
+                return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+            } else {
+                return strToDecrypt;
+            }
         } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException e) {
             logger.error("Error while decrypting: " + e.toString());
         }
