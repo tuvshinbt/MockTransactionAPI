@@ -40,7 +40,7 @@ public class Account {
     private String cardNo;
 //    @Column(nullable = false)
     private String expirationDate;
-//    @Column(nullable = false)
+    @Column(name = "name_on_card")
     private String name;
 //    @Column(nullable = false)
     private String CCV;

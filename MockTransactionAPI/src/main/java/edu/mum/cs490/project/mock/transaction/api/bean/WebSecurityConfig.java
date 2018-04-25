@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { //implemen
                 .antMatchers(HttpMethod.GET, "/").permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/mock/transaction/api").access("hasRole('ROLE_USER')")
+                .antMatchers(HttpMethod.POST, "/mock**").access("hasRole('ROLE_USER')")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic();
