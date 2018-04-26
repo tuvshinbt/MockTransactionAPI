@@ -45,7 +45,12 @@ public class TransactionAOPService {
     @Around("execution(* edu.mum.cs490.project.mock.transaction.api.service1.*.*(..))&& args(requestStr)")
     public Object aopDecryptService(ProceedingJoinPoint pjp, String requestStr) throws Throwable {
         logger.info("# AOP BEFORE (5) #  is called on " + pjp.getSignature().toShortString() + " " + requestStr);
-        String decrytedData = apiAES.decrypt(requestStr);
+        String decrytedData;
+        try {
+            decrytedData = apiAES.decrypt(requestStr);
+        } catch (Exception e) {
+            decrytedData = e.getMessage();
+        }
         logger.info("decrypting data - " + (decrytedData != null ? decrytedData.substring(0, 10) : decrytedData));
         Object retVal = pjp.proceed(new Object[]{decrytedData});
         logger.info("# AOP AFTER (5) #  is called on " + pjp.getSignature().toShortString() + " returnValue - " + (retVal != null ? retVal.toString() : null));
