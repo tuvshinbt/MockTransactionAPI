@@ -23,12 +23,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "Transaction")
-@NamedQueries(
-        @NamedQuery(name = "Transaction.find.last.active", query = "SELECT t FROM Transaction t WHERE "
-                + "t.srcCardNo = :srcCardNo AND "
-                + "(t.result = 1 or t.payCash = true) "
-                + "ORDER BY t.id DESC")
-)
 public class Transaction {
 
     @Id

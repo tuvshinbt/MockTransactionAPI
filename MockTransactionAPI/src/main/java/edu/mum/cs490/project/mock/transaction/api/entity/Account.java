@@ -23,14 +23,6 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "Account")
-@NamedQueries(
-        @NamedQuery(name = "Account.find.by.fields", query = "SELECT a FROM Account a WHERE "
-                + "a.cardNo = :cardNo and "
-                + "a.name = :name and "
-                + "a.zipCode = :zipCode and "
-                + "a.CCV = :CCV and "
-                + "a.expirationDate = :expirationDate")
-)
 public class Account {
 
     @Id

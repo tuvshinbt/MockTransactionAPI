@@ -23,15 +23,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter { //implemen
     protected void configure(HttpSecurity http) throws Exception {
         System.out.println("WebSecurityConfig.configure()");
         http
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/mock**").access("hasRole('ROLE_USER')")
-                .anyRequest().authenticated()
-                .and()
-                .httpBasic();
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.GET, "/").permitAll()
+            .and()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/mock**").access("hasRole('ROLE_OSS')")
+            .anyRequest().authenticated()
+            .and()
+            .httpBasic();
     }
 
     /**

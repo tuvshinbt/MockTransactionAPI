@@ -30,7 +30,6 @@ public class InitBean implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-
         System.out.println("<<< MOCK TRANSACTION API has been successfully started >>>");
         System.out.printf("<<< Author - %s >>>\n", author);
         insertData();
