@@ -19,9 +19,9 @@ public interface AccountDAO extends JpaRepository<Account, Long> {
             + "a.cardNo = ?1 and "
             + "a.name = ?2 and "
             + "a.zipCode = ?3 and "
-            + "a.CCV = ?4 and "
+            + "a.CVV = ?4 and "
             + "a.expirationDate = ?5")
-    Account findByCardNoAndNameAndZipCodeAndCCVAndExpirationDate(String cardNo, String name, String zipCode, String CCV, String expirationDate);
+    Account findByCardNoAndNameAndZipCodeAndCVVAndExpirationDate(String cardNo, String name, String zipCode, String CVV, String expirationDate);
 
     Account findByCardNo(String cardNo);
 

@@ -49,14 +49,14 @@ public class DepositServiceImpl implements DepositService {
             logger.error("", ex);
             return "Invalid request";
         }
-        Account account = new Account(dr.getDstCardNo(), dr.getExpirationDate(), dr.getNameOnCard().toUpperCase(), dr.getCCV(), dr.getZipCode());
+        Account account = new Account(dr.getDstCardNo(), dr.getExpirationDate(), dr.getNameOnCard().toUpperCase(), dr.getCVV(), dr.getZipCode());
 
         Integer resultCode = 0;
         double availableAmount = 0.0;
 
         // To get an account from db
         logger.info("Get the account from the DB.");
-        Account dstAccount = accountDAO.findByCardNoAndNameAndZipCodeAndCCVAndExpirationDate(account.getCardNo(), account.getName(), account.getZipCode(), account.getCCV(), account.getExpirationDate());
+        Account dstAccount = accountDAO.findByCardNoAndNameAndZipCodeAndCVVAndExpirationDate(account.getCardNo(), account.getName(), account.getZipCode(), account.getCVV(), account.getExpirationDate());
 
         if (dstAccount == null) {
             // Not found account

@@ -35,7 +35,7 @@ public class Account {
     @Column(name = "name_on_card")
     private String name;
 //    @Column(nullable = false)
-    private String CCV;
+    private String CVV;
 //    @Column(nullable = false)
     private String zipCode;
 //    @Column(nullable = false)
@@ -46,11 +46,11 @@ public class Account {
     public Account() {
     }
 
-    public Account(String cardNo, String expirationDate, String name, String CCV, String zipCode) {
+    public Account(String cardNo, String expirationDate, String name, String CVV, String zipCode) {
         this.cardNo = cardNo;
         this.expirationDate = expirationDate;
         this.name = name;
-        this.CCV = CCV;
+        this.CVV = CVV;
         this.zipCode = zipCode;
         this.createdAt = new Date();
     }
@@ -87,12 +87,12 @@ public class Account {
         this.name = name;
     }
 
-    public String getCCV() {
-        return CCV;
+    public String getCVV() {
+        return CVV;
     }
 
-    public void setCCV(String CCV) {
-        this.CCV = CCV;
+    public void setCVV(String CVV) {
+        this.CVV = CVV;
     }
 
     public String getZipCode() {
@@ -121,7 +121,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "id=" + id + ", cardNo=" + cardNo + ", expirationDate=" + expirationDate + ", name=" + name + ", CCV=" + CCV + ", zipCode=" + zipCode + ", amount=" + amount + ", createdAt=" + createdAt + '}';
+        return "Account{" + "id=" + id + ", cardNo=" + cardNo + ", expirationDate=" + expirationDate + ", name=" + name + ", CVV=" + CVV + ", zipCode=" + zipCode + ", amount=" + amount + ", createdAt=" + createdAt + '}';
     }
 
 }

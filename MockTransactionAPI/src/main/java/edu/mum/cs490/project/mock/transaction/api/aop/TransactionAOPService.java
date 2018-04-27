@@ -107,8 +107,8 @@ public class TransactionAOPService {
         if (account.getZipCode() != null) {
             account.setZipCode(aes.decrypt(account.getZipCode()));
         }
-        if (account.getCCV() != null) {
-            account.setCCV(aes.decrypt(account.getCCV()));
+        if (account.getCVV() != null) {
+            account.setCVV(aes.decrypt(account.getCVV()));
         }
         if (account.getExpirationDate() != null) {
             account.setExpirationDate(aes.decrypt(account.getExpirationDate()));
@@ -126,8 +126,8 @@ public class TransactionAOPService {
         if (account.getZipCode() != null) {
             account.setZipCode(aes.encrypt(account.getZipCode()));
         }
-        if (account.getCCV() != null) {
-            account.setCCV(aes.encrypt(account.getCCV()));
+        if (account.getCVV() != null) {
+            account.setCVV(aes.encrypt(account.getCVV()));
         }
         if (account.getExpirationDate() != null) {
             account.setExpirationDate(aes.encrypt(account.getExpirationDate()));

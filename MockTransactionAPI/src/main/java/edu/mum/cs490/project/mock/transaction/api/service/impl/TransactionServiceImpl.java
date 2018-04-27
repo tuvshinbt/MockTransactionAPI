@@ -49,7 +49,7 @@ public class TransactionServiceImpl implements TransactionService {
             logger.error("", ex);
             return "Invalid request";
         }
-        Account account = new Account(tr.getSrcCardNo(), tr.getExpirationDate(), tr.getNameOnCard().toUpperCase(), tr.getCCV(), tr.getZipCode());
+        Account account = new Account(tr.getSrcCardNo(), tr.getExpirationDate(), tr.getNameOnCard().toUpperCase(), tr.getCVV(), tr.getZipCode());
 
         Integer resultCode = 0;
         double availableAmount = 0.0;
@@ -57,7 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
 
         // To get an account from db
         logger.info("Get the source account from the DB.");
-        Account srcAccount = accountDAO.findByCardNoAndNameAndZipCodeAndCCVAndExpirationDate(account.getCardNo(), account.getName(), account.getZipCode(), account.getCCV(), account.getExpirationDate());
+        Account srcAccount = accountDAO.findByCardNoAndNameAndZipCodeAndCVVAndExpirationDate(account.getCardNo(), account.getName(), account.getZipCode(), account.getCVV(), account.getExpirationDate());
 
         if (srcAccount == null) {
             // Not found the account

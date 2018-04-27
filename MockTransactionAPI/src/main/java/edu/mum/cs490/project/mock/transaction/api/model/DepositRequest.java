@@ -16,7 +16,7 @@ public class DepositRequest {
     private String txnId;
     private String expirationDate;
     private String nameOnCard;
-    private String CCV;
+    private String CVV;
     private String zipCode;
     private Double amount;
     private String dstCardNo;
@@ -48,12 +48,12 @@ public class DepositRequest {
         this.nameOnCard = nameOnCard;
     }
 
-    public String getCCV() {
-        return CCV;
+    public String getCVV() {
+        return CVV;
     }
 
-    public void setCCV(String CCV) {
-        this.CCV = CCV;
+    public void setCVV(String CVV) {
+        this.CVV = CVV;
     }
 
     public String getZipCode() {

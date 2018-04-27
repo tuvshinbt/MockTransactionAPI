@@ -24,7 +24,7 @@ public class MainTest {
         //For testing
         DepositRequest tr = new DepositRequest();
         tr.setAmount(1.1);
-        tr.setCCV("CCV");
+        tr.setCVV("CVV");
         tr.setDstCardNo("0123456789012345");
         tr.setExpirationDate("04/2018");
         tr.setNameOnCard("TEST");

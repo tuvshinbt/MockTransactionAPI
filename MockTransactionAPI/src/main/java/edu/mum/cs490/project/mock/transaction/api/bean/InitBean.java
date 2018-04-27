@@ -43,7 +43,7 @@ public class InitBean implements ApplicationRunner {
     public void insertData() {
         Account account = new Account();
         account.setCardNo("01234567890123456");
-        account.setCCV("CCV");
+        account.setCVV("CCV");
         account.setAmount(10000.0);
         account.setExpirationDate("04/2018");
         account.setName("TEST");
